@@ -69,7 +69,6 @@ function priorPageResults(){
 	}
 }
 
-
 //send click
 function sendClickPage(){
 	pageNumber = 0;
@@ -108,6 +107,8 @@ function sendClick(){
 	if (pageNumber > 0){
 		togglePrior(true);
 	}
+	
+	keywordSliders();
 }
 
 //clear click
@@ -141,13 +142,7 @@ function out(){
 console.log('out');
 };
 
-
-//function customSort(pAuthor, pPub, pTitle, pYear, pTwitter){
 function customSort(response){
-//	$.getJSON(PROXY_URL+SEARCH_PATH+$('#search').val()+'/',CONSUMER_KEY,function(response,status,xhr){
-		
-		
-		
 		
 		authorWeight = $( "#authslider" ).slider( "values", 1 ); 
 		authorWeight = Math.abs(authorWeight-100)+1;
@@ -166,23 +161,6 @@ function customSort(response){
 		var SearchTerms = $('#search')[0].value;
 		SearchTerms = SearchTerms.split(';');
 		
-		 //Prioritize Author
-		 /* var authorWeight = .5;
-		 if (pAuthor ){
-			authorWeight = .1;
-		 } */
-		  
-		 //Prioritize Publication
-		/*  var pubWeight = 1;
-		 if (pPub){
-			pubWeight = .1;
-		 } */
-		 
-		 //Prioritize Title
-		/*  var titleWeight = .8;
-		 if (pTitle ){
-			titleWeight = .1;
-		 } */
 		 
 		//Filter Year
 		
@@ -290,8 +268,6 @@ function reSort(){
 		$('#spinner2').fadeOut(1000);
 	});
 }
-
-
 
 function setTimer(){
 	
@@ -402,4 +378,39 @@ function displayPublicationSlider(){
 	}); 
 	
 
+}
+
+function keywordSliders(){
+
+	var SearchTerms = $('#search')[0].value;
+	SearchTerms = SearchTerms.split(';');
+	var term0 = SearchTerms[0];
+	var term1 = SearchTerms[1];
+	var term2 = SearchTerms[2];
+	var term3 = SearchTerms[3];
+	
+	console.log(term0);
+	console.log(term1);
+	console.log(term2);
+	console.log(term3);
+	
+	term0Slider(term0);
+	
+}
+
+function term0Slider(term0){
+
+	$(function() {
+		$( "#t0slider" ).slider({
+			range: "min",
+			min: 0,
+			max: 100,
+			value: 0,
+			slide: function( event, ui ) {
+				$( "#t0Priority" ).val( ui.value );
+			}
+		});
+		$( "#t0Priority" ).val( $( "#t0slider" ).slider( "value" ) );
+		$("#t0label").text(term0+"  ");
+	}); 
 }

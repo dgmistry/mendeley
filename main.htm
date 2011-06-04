@@ -50,7 +50,7 @@
 		
 	<!-- container -->
 	<div id="container" class="ui-widget-content round-me" style="height:250px;float:left;">
-	<div id="extracontainer" class="ui-widget-content round-me" style="height:250px;float:left;">
+	
 	
 				
 		<div style="float:left;">
@@ -192,8 +192,19 @@
 	<!-- protovis -->
     <!-- <script type="text/javascript" src="js/proto.js"></script> -->
 	</div>
-	<div id="extracontainer" class="ui-widget-content round-me" style="height:250px;width:100px;float:left;">
-		test
-	<div>
+	<div id="extracontainer" class="ui-widget-content round-me">
+		<p class="container">
+			<font>search term priority</font>
+		</p>
+		<!--Term 0 Slider-->
+		<div id="t0sliderDiv">
+				<p>
+					<div id="t0label" style="float:left;"></div>
+					<div style="float:left;"><input type="text" id="t0Priority" class="ui-state-default round-me dynSlider" style="width:35px;"></div>
+				</p>
+				<br>
+				<div id="t0slider" class="horSlider"></div>
+		</div>	
+	</div>
   </body>
 </html>

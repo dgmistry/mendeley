@@ -10,9 +10,9 @@
 }
 
 #extracontainer {
-  font: 1em Georgia, serif;
-  letter-spacing: 1px;
-  font-weight: 500;
+  height:	250px;
+  width:		300px;
+  float:		left;
 }
 
 #top {
@@ -35,6 +35,21 @@
   width:				200px; 
   margin-left:		.6em;
   margin-top:		.8em;
+}
+
+.dynSlider {
+  margin-top:			-.30em;
+  margin-left:			1em;
+  text-align:			center;
+  width:					50px;
+  font-size:			18px;"
+}
+
+#t0label {
+  font: 					1em Georgia, serif;
+  letter-spacing: 	1px;
+  font-weight: 		500;
+  margin-left:			.5em;
 }
 
 .vertOutput {
@@ -62,7 +77,10 @@
 }
 
 font {
-  font-size:		14px;
+  font: 1em Georgia, serif;
+  letter-spacing: 1px;
+  font-weight: 500;
+  margin-left: .5em;
 }
 
 .topDivs {
