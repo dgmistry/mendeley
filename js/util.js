@@ -22,6 +22,12 @@ function clear(clearAll){
 	
 	//reset page number
 	pageNumber = 0;
+	
+	$('#pp').children().remove();
+	$('#aa').children().remove();
+	
+	$("#extracontainer").hide();
+	
   }
 
 //HIDE MAP
@@ -104,7 +110,7 @@ function send(url,get,utilFunc){
 		storeResponse = response;
 		originalResponse = jQuery.extend(true, {}, response);
 		
-		
+		//console.log("ORIGINAL LENGTH: " + storeResponse.documents.length);
 		//sort response
 		customSort(storeResponse);
 		
@@ -129,7 +135,7 @@ function populate(response){
   //for each json entry
   $.each(response.documents,function(key,val){
 	//results->div
-	
+	//console.log("LOOK" + response.documents.length);
 	if (!val.title){
 		return;
 	}

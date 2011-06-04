@@ -59,9 +59,9 @@
 		
 		<div>
 				<p>
-					<div style="float:left;vertical-align:middle;">&nbsp retrieve &nbsp</div>
-					<div style="float:left;"><input type="text" id="paperQuant" class="container round-me horOutput"></div>
-					<div style="float:left;">&nbsp papers</div>
+					<div style="float:left;vertical-align:middle;">&nbsp Retrieve &nbsp</div>
+					<div style="float:left;"><input type="text" id="paperQuant" class="container round-me horOutput" readonly="true"></div>
+					<div style="float:left;">&nbsp Papers</div>
 				</p>
 				<br>
 				<div id="pqslider" class="horSlider"></div>
@@ -69,7 +69,7 @@
 		
 		<!--Search Fields-->
 			<div class="topDivs">
-				  <span style="margin-left:2.5px;">paper</span>
+				  <span style="margin-left:2.5px;">Paper</span>
 			</div>
 
 			<div class="topDivs">
@@ -77,7 +77,7 @@
 			</div>
 
 			<div class="topDivs">
-				  <span style="margin-left:2.5px;">author</span>
+				  <span style="margin-left:2.5px;">Author</span>
 			</div>
 
 			<div class="topDivs">
@@ -92,32 +92,24 @@
 
 			<!-- submit -->
 			  <span style="float:left;width:90px;margin-left:3px;">
-				<a id="submit" href="javascript:">submit</a>
+				<a id="submit" href="javascript:">Submit</a>
 				<img id="spinner1" src="images/loading4.gif" alt="loading..."/>
 			  </span>
 
 			  <!-- clear -->
 			  <span style="float:left;width:70px;">
-				<a id="clear" href="javascript:" style="margin-left:3px;">clear</a>
+				<a id="clear" href="javascript:" style="margin-left:3px;">Clear</a>
 			  </span>
 
 			  <span style="float:left;width:100px;">
-				<a id="previous" href="javascript:" style="margin-left:3px;">previous</a>
+				<a id="previous" href="javascript:" style="margin-left:3px;">Previous</a>
 			  </span>
 			  
 			  <!-- next -->
 			  <span style="float:left;width:100px;">
-				<a id="next" href="javascript:" style="margin-left:3px;">next</a>
-				<span id="currentpage"></span>
+				<a id="next" href="javascript:" style="margin-left:3px;">Next</a>
 			  </span>
 			  
-
-			<!-- resort -->
-			  <span style="float:left; width:80px;">
-				<span id="spinner2" href="javascript:">
-					resort <img id="spinner2" src="images/loading4.gif" alt="loading..."/>
-				</span>
-			  </span>
 
 			  </div>
 		</div>
@@ -131,7 +123,7 @@
 				
 				<span>
 						<label for="amount" style="padding:4px;">
-							publication years
+							Publication Years
 							<input type="text" id="amount" class="ui-state-default round-me" style="text-align:center;border:0px;font-size:18px;width:120px" />
 						</label>
 				</span>	
@@ -143,28 +135,28 @@
 			<!--vert sliders-->
 			
 			<div style="float:left;">
-				<p class="vertTitle">
-					author		
+				<p class="vertTitle" style="margin-left:4em">
+					Author		
 				</p>
-				<input type="text" id="authorPriority" class="ui-state-default round-me vertOutput"/>
-				<div id="authslider" class="vertSlider"></div>
+				<input type="text" id="authorPriority" class="ui-state-default round-me vertOutput" style="margin-left:4em"/>
+				<div id="authslider" class="vertSlider" style="margin-left:4.7em"></div>
 			</div>	
 			
 			<div style="float:left;">
 				<p class="vertTitle">
-					title
+					Title
 				</p>
 				<input type="text" id="titlePriority" class="ui-state-default round-me vertOutput"/>
 				<div id="titleslider" class="vertSlider"></div>
 			</div>
 			
-			<div style="float:left;">
+			<!-- <div style="float:left;">
 				<p class="vertTitle">
-					publication
+					Publication
 				</p>
 				<input type="text" id="pubPriority" class="ui-state-default round-me vertOutput" />
 				<div id="pubslider" class="vertSlider"></div>
-			</div>
+			</div> -->
 		</div>
 		
 		<!-- top -->
@@ -176,10 +168,15 @@
 		<!-- spacer -->
 		<div class="spacer"></div>
 		<!-- results and map -->
-		<div style="margin-top:250px;">
+		<div style="margin-top:240px;">
 		  <!-- results -->
-			
-			<ul id="results"></ul>
+			<ul class="ui-widget-content round-me" style="margin-left:40px;width:200px;height:23px;vertical-align:center;">
+			<span id="currentpage" style="margin-left:-20px"></span>
+			<span id="spinner2" href="javascript:">
+				&nbsp &nbsp &nbsp Resort <img id="spinner2" src="images/loading4.gif" alt="loading..."/>
+			</span>
+			</ul>
+			<ul id="results" style="margin-top:-20px;"></ul>
 
 		  <!-- map -->
 	<!-- <div style="background-color:#4A5584;float:left;">
@@ -193,17 +190,16 @@
     <!-- <script type="text/javascript" src="js/proto.js"></script> -->
 	</div>
 	<div id="extracontainer" class="ui-widget-content round-me">
-		<p class="container">
-			<font>search term priority</font>
+		<p class="container" style="margin-top: .6em;">
+			<font>Search Term Priority</font>
 		</p>
-		<!--Term 0 Slider-->
-		<div id="t0sliderDiv">
-				<p>
-					<div id="t0label" style="float:left;"></div>
-					<div style="float:left;"><input type="text" id="t0Priority" class="ui-state-default round-me dynSlider" style="width:35px;"></div>
-				</p>
+		<!--Dynamic Sliders-->
+		<div id="slipandSlide">
+				<div id="pp">
+				</div>
 				<br>
-				<div id="t0slider" class="horSlider"></div>
+				<div id="aa">
+				</div>
 		</div>	
 	</div>
   </body>

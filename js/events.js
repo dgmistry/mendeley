@@ -39,13 +39,13 @@ function bindings(){
 	
   });
   
-    $( "#pubslider" ).bind( "slidestop", function(event, ui) {
+    /* $( "#pubslider" ).bind( "slidestop", function(event, ui) {
 	
 	console.log("timer started");
 	setTimer();
 	timerSort();
 	
-  });
+  }); */
   
     $( "#titleslider" ).bind( "slidestop", function(event, ui) {
 	
@@ -62,6 +62,19 @@ function bindings(){
 	timerSort();
 	
   });
+  
+  // for (var i = 0; i < numKeyWords; i++) {
+		// tSlider="t"+i+"ppslider";
+		// tPriority="t"+i+"ppPriority";
+		// $( "#"+ tSlider).bind( "slidestop", function(event, ui) {
+	 	// $( "#" + tSlider ).slider({
+			// slide: function(event, ui) { 
+				// $( "#" + tPriority).val( ui.value );
+			// }
+		// }); 
+			// $( "#" + tPriority).val( $("#" + tSlider).slider( "value" ) );
+		// });
+	// }
   
   //bind 'key up' -> return key
 //$.bind('keyup',checkInput);

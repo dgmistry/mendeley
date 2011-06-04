@@ -51,19 +51,19 @@ function checkInput(){
 
 function nextPageResults(){
 	pageNumber++
-	$("#currentpage").text(pageNumber);
+	$("#currentpage").text("Page # " + (pageNumber+1));
 	sendClick();
 }
 
 function priorPageResults(){
 	if (pageNumber > 1){
 		pageNumber--
-		$("#currentpage").text(pageNumber);
+		$("#currentpage").text("Page # " + (pageNumber+1));
 		sendClick();
 	}
 	else if (pageNumber === 1){
 		pageNumber--
-		$("#currentpage").text(pageNumber);
+		$("#currentpage").text("Page # " + (pageNumber+1));
 		sendClick();
 		togglePrior(false);
 	}
@@ -72,7 +72,7 @@ function priorPageResults(){
 //send click
 function sendClickPage(){
 	pageNumber = 0;
-	$("#currentpage").text(pageNumber);
+	$("#currentpage").text("Page # " + (pageNumber+1));
 	sendClick();
 }
 
@@ -80,6 +80,9 @@ function sendClick(){
 	//clear previous results
 	clear(false);
 	
+	$('#pp').children().remove();
+	$('#aa').children().remove();
+	$("#extracontainer").show();
 	//call send with proper url and utility function
 	var paperQuantity = $('#paperQuant').val();
 	console.log(paperQuantity);
@@ -144,57 +147,75 @@ console.log('out');
 
 function customSort(response){
 		
-		authorWeight = $( "#authslider" ).slider( "values", 1 ); 
-		authorWeight = Math.abs(authorWeight-100)+1;
-		titleWeight =  $( "#titleslider" ).slider( "values", 1 ); 
-		titleWeight = Math.abs(titleWeight-100)+1;
-		pubWeight = $( "#pubslider" ).slider( "values", 1 ); 
-		pubWeight = Math.abs(pubWeight-100)+1;
+		origauthorWeight = $( "#authslider" ).slider( "values", 1 ); 
+		
+		authorWeight = 1.1-((origauthorWeight + .1)*.1);
+		
+		origtitleWeight =  $( "#titleslider" ).slider( "values", 1 ); 
+		titleWeight = 1.1-((origtitleWeight + .1)*.1);
+		
+// 		pubWeight = $( "#pubslider" ).slider( "values", 1 ); 
+//		pubWeight = Math.abs(pubWeight-100)+1;
 		pYear1 = $( "#slider-range" ).slider( "values", 0 );
 		pYear2 = $( "#slider-range" ).slider( "values", 1 );
+		
+
+		
+		//Search Term Priority
+		// t0 = $( "#t0slider" ).slider( "values", 1 ); 
+		// t0 = Math.abs(t0-100)+1;
+		// t1 = $( "#t1slider" ).slider( "values", 1 ); 
+		// t1 = Math.abs(t0-100)+1;
+		// t2 = $( "#t2slider" ).slider( "values", 1 ); 
+		// t2 = Math.abs(t0-100)+1;
+		// t3 = $( "#t3slider" ).slider( "values", 1 ); 
+		// t3 = Math.abs(t0-100)+1;
+		// a0 = $( "#at0slider" ).slider( "values", 1 ); 
+		// a0 = Math.abs(t0-100)+1;
+		// a1 = $( "#at1slider" ).slider( "values", 1 ); 
+		// a1 = Math.abs(t0-100)+1;
+		// a2 = $( "#at2slider" ).slider( "values", 1 ); 
+		// a2 = Math.abs(t0-100)+1;
+		// a3 = $( "#at3slider" ).slider( "values", 1 ); 
+		// a3 = Math.abs(t0-100)+1;
+		
+		
 		console.log("Author Weight = " + authorWeight);
 		console.log("Title Weight = " + titleWeight);
-		console.log("Publication Weight = " + pubWeight);
+	//	console.log("Publication Weight = " + pubWeight); 
 	
 		var sortedResponse = response;
 		
-		var SearchTerms = $('#search')[0].value;
-		SearchTerms = SearchTerms.split(';');
+		var SearchTerms = ($('#search')[0].value + " " + $('#authsearch')[0].value);
+		SearchTerms = $.trim(SearchTerms);
+		SearchTerms = SearchTerms.split(' ');
 		
-		 
-		//Filter Year
-		
-	//	for (sortedResponse.documents, function(key, val) {
 		console.log(sortedResponse.documents.pop().title);
+		 
+		//Filter Year	- THIS IS REMOVING AN ENTRY BY ACCIDENT!!!
 		if (pYear1 != ""){
 			for(var i=0, itemSize=sortedResponse.documents.length; i<itemSize; i++) {
-				// console.log(pYear1);
-				// console.log("Year 2 = " + pYear2);
-				// console.log(sortedResponse.documents[i].year);
+			
 				if (pYear1 <= sortedResponse.documents[i].year && pYear2 >= sortedResponse.documents[i].year){
-						// console.log("MATCH, i = " +i);
-						// console.log("Year Match, length = " + sortedResponse.documents.length);
-						// console.log(sortedResponse.documents[i].year);
-						// console.log(sortedResponse.documents[i].title);
-						// console.log("i = " + i);
-						// console.log("itemSize = " + i);
-						// console.log("length = " + sortedResponse.documents.length); 
+						
 				}
 				else if (sortedResponse.documents[i].year != undefined) {
-					console.log("NO MATCH " + sortedResponse.documents[i].year);
+					//console.log("NO MATCH " + sortedResponse.documents[i].year);
 					sortedResponse.documents.splice(i,1);
- 					console.log("Deleting Item" + i); 
+ 					//console.log("Deleting Item" + i); 
 					itemSize = itemSize-1;
 					i--;
 				};
-				//console.log("Looping through item:" + i);
+				
 			};
-			//console.log("Year isn't blank" + i);
+			
 		};
-		 
+		
+		 //Sorting Algorithm
+		 console.log("sortedResponse length: " + sortedResponse.documents.length);
 		$.each(sortedResponse.documents, function(key, val) {
-			var i=key;
-			i=i+.1;
+			var i=key+1;
+	
 			
 			if (val.authors != null) {
 				var lcAuthors=val.authors.toLowerCase();
@@ -204,14 +225,7 @@ function customSort(response){
 				var lcAuthors = "";
 			}
 			
-			if (val.publication_outlet != null) {
-				var lcPublication=val.publication_outlet.toLowerCase();
-				lcPublication = lcPublication.replace(/[^\w\s]/g, "");
-			}
-			else {
-				var lcPublication = "";
-			}
-			
+
 			if (val.title != null) {
 				var lcTitle=val.title.toLowerCase();
 				lcTitle = lcTitle.replace(/[^\w\s]/g, "");
@@ -222,37 +236,42 @@ function customSort(response){
 			
 			var SLength = SearchTerms.length;
 			
-			var PaperScore = (i+.1);
+			var PaperScore = (i);
 			
 			while (SLength--) {
-				if (lcTitle.indexOf(SearchTerms[SLength]) !== -1) {
-					PaperScore = (PaperScore*titleWeight);
+				if( $( "#titleslider" ).slider( "values", 1 ) != 0){
+					if (lcTitle.indexOf(SearchTerms[SLength]) !== -1) {
+						PaperScore = (PaperScore*titleWeight);
+						console.log("PAPER MATCH");
+					} 
 				}
-				if (lcAuthors.indexOf(SearchTerms[SLength]) !== -1) {
-					PaperScore = (PaperScore*authorWeight);
-				}
-				if (lcPublication.indexOf(SearchTerms[SLength]) !== -1) {
-					PaperScore = (PaperScore*pubWeight);
+				
+				if( $( "#authslider" ).slider( "values", 1 ) != 0){
+					if (lcAuthors.indexOf(SearchTerms[SLength])  !== -1) {
+						console.log("AUTH MATCH");
+						PaperScore = (PaperScore*authorWeight);
+					}
 				}
 				val.sortOrder = PaperScore;
 				
 			}
 			
-			// console.log(val.sortOrder);
-			// console.log(lcAuthors);
-			// console.log(lcTitle); 
-			
+			console.log(val.sortOrder);
+			console.log(lcAuthors);
+			console.log(lcTitle); 
+			i++;
 		});
 		
 		function compareDocuments(a, b){
 		return a.sortOrder - b.sortOrder;
 		}
+		
 		sortedResponse.documents.sort(compareDocuments);
 		
 		$.each(sortedResponse.documents, function(key, val) {
 			
-			//console.log(val.sortOrder);
-			//console.log(val.year);
+	//		console.log(val.sortOrder);
+	//		console.log(val.year);
 		});
 //	});
 }
@@ -260,11 +279,12 @@ function customSort(response){
 function reSort(){
 	$('#spinner2').fadeIn(200,function(){
 		storeResponse = jQuery.extend(true, {}, originalResponse);
-		if(storeResponse.documents != null && storeResponse.documents != "undefined") {
+		//if(storeResponse.documents != null && storeResponse.documents != "undefined") {
+		
 			customSort(storeResponse);
 			$('#results').children().remove();
 			populate(storeResponse);
-		}
+	//	}
 		$('#spinner2').fadeOut(1000);
 	});
 }
@@ -272,10 +292,7 @@ function reSort(){
 function setTimer(){
 	
 	clearTimeout(currentTimeout);
-	currentTimeout = setTimeout(reSort(),2250);
-	
-	console.log(currentTimeout);
-	console.log(currentTimeout);
+	currentTimeout = setTimeout(reSort,2250);
 	
 }
 
@@ -310,10 +327,10 @@ function displayPaperQuantSlider(){
 	$(function() {
 		$( "#pqslider" ).slider({
 			range: "min",
-			min: 50,
+			min: 10,
 			max: 1000,
 			step: 50,
-			value: 100,
+			value: 10,
 			slide: function( event, ui ) {
 				$( "#paperQuant" ).val( ui.value );
 			}
@@ -330,7 +347,7 @@ function displayAuthorSlider(){
 			orientation: "vertical",
 			range: "min",
 			min: 0,
-			max: 100,
+			max: 10,
 			value: 0,
 			slide: function( event, ui ) {
 				$( "#authorPriority" ).val( ui.value );
@@ -349,7 +366,7 @@ function displayTitleSlider(){
 			orientation: "vertical",
 			range: "min",
 			min: 0,
-			max: 100,
+			max: 10,
 
 			value: 0,
 			slide: function( event, ui ) {
@@ -368,7 +385,7 @@ function displayPublicationSlider(){
 			orientation: "vertical",
 			range: "min",
 			min: 0,
-			max: 100,
+			max: 10,
 			value: 0,
 			slide: function( event, ui ) {
 				$( "#pubPriority" ).val( ui.value );
@@ -383,34 +400,87 @@ function displayPublicationSlider(){
 function keywordSliders(){
 
 	var SearchTerms = $('#search')[0].value;
-	SearchTerms = SearchTerms.split(';');
-	var term0 = SearchTerms[0];
-	var term1 = SearchTerms[1];
-	var term2 = SearchTerms[2];
-	var term3 = SearchTerms[3];
+	SearchTerms = $.trim(SearchTerms);
+	SearchTerms = SearchTerms.split(' ');
 	
-	console.log(term0);
-	console.log(term1);
-	console.log(term2);
-	console.log(term3);
-	
-	term0Slider(term0);
-	
-}
+	var authSearchTerms = $('#authsearch')[0].value;
+	authSearchTerms = $.trim(authSearchTerms);
+	authSearchTerms = authSearchTerms.split(' ');
 
-function term0Slider(term0){
-
-	$(function() {
-		$( "#t0slider" ).slider({
-			range: "min",
-			min: 0,
-			max: 100,
-			value: 0,
-			slide: function( event, ui ) {
-				$( "#t0Priority" ).val( ui.value );
+	if (SearchTerms[0] != "undefined" && SearchTerms[0] != ""){
+		for (var i = 0; i < SearchTerms.length; i++) {
+			sliderArray[i]=SearchTerms[i];
+			sliderArray[i] = sliderArray[i].replace(/["]{1}/gi,"");
+		}
+		superSliders("pp");
+		
+	}
+	
+	sliderArray = [];
+	
+	if (authSearchTerms[0] != "undefined" && authSearchTerms[0] != ""){
+		for (var i = 0; i < authSearchTerms.length; i++) {
+			sliderArray[i]=authSearchTerms[i];
+			sliderArray[i] = sliderArray[i].replace(/["]{1}/gi,"");		
+		}
+		superSliders("aa");
+	}
+	
+	sliderArray = [];
+	
+} 
+	
+function superSliders(q){
+	
+	numKeyWords = (sliderArray.length);
+	
+	for (var i = 0; i < sliderArray.length; i++) {
+	//jQuery.each(sliderArray, function(){
+		//i=0;
+		//console.log("arr len: " + sliderArray.length);
+		(function(num){
+			tSlider="t"+num+q+"slider";
+			tPriority="t"+num+q+"Priority";
+			tLabel="t"+num+q+"label";
+		
+			//console.log("tlabel: "+tLabel);
+		
+			$('<div>',{'id':q+sliderArray[num]}).appendTo('#'+q).fadeIn(1000);
+			$('<p>',{'id':'p'+num+q}).appendTo('#'+q+sliderArray[num]).fadeIn(1000);
+			$('<div>',{'id':tLabel,'class':'tlabel'}).appendTo('#p'+num+q).fadeIn(1000);
+			$('<div>',{'id':'d'+num+q,'style':'float:left'}).appendTo('#p'+num+q).fadeIn(1000);
+			$('<input>',{'id':tPriority,'class':'ui-state-default round-me dynSliderVal'}).appendTo('#d'+num+q).fadeIn(1000);
+			$('<br>').appendTo('#'+q+sliderArray[num]).fadeIn(1000);
+			$('<div>',{'id':tSlider,'class':'dynSlider'}).appendTo('#'+q+sliderArray[num]).fadeIn(1000);
+			$('<br>').appendTo('#'+q+sliderArray[num]).fadeIn(1000);
+		
+		
+			$(function() {
+				$( "#" + tSlider).slider({
+					range: "min",
+					min: 0,
+					max: 10,
+					value: 0,
+					slide: function( event, ui ) {
+						$( "#" + tPriority).val( ui.value );
+						console.log("JOSH: " + tPriority);
+					}
+				});
+				
+				$( "#" + tPriority).val( $("#" + tSlider).slider( "value" ) );
+				$("#" + tLabel).text(sliderArray[num]+"  ");
+			});
+		
+		}(i));
+		//i++;
+	}
+	/* for (var i = 0; i < sliderArray.length; i++) {
+		tSlider="t"+i+q+"slider";
+		tPriority="t"+i+q+"Priority";
+		$( "#" + tSlider ).slider({
+			slide: function(event, ui) { 
+				$( "#" + tPriority).val( ui.value );
 			}
 		});
-		$( "#t0Priority" ).val( $( "#t0slider" ).slider( "value" ) );
-		$("#t0label").text(term0+"  ");
-	}); 
+	} */
 }

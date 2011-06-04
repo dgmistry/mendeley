@@ -13,7 +13,9 @@ $(function(){
   displaySliders();
   displayAuthorSlider();
   displayTitleSlider();
-  displayPublicationSlider();
+  //displayPublicationSlider();
   displayPaperQuantSlider();
+  
+  $("#extracontainer").hide();
   
 });

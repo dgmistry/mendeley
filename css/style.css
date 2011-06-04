@@ -10,9 +10,11 @@
 }
 
 #extracontainer {
-  height:	250px;
-  width:		300px;
+  height:	auto;
+  padding: 0px 0px 10px 0px;
+  width:		186px;
   float:		left;
+  margin-left: 1em;
 }
 
 #top {
@@ -38,18 +40,27 @@
 }
 
 .dynSlider {
-  margin-top:			-.30em;
-  margin-left:			1em;
+  margin-top:			.8em;
+  margin-left:			1.1em;
   text-align:			center;
-  width:					50px;
+  width:					150px;
   font-size:			18px;"
 }
 
-#t0label {
+.dynSliderVal {
+  margin-top:			-.3em;
+  text-align:			center;
+  width:					35px;
+  font-size:			18px;"
+}
+
+.tlabel {
   font: 					1em Georgia, serif;
   letter-spacing: 	1px;
   font-weight: 		500;
-  margin-left:			.5em;
+  margin-left:			.6em;
+  float:					left;
+  width:					125px;
 }
 
 .vertOutput {
