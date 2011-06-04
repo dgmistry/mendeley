@@ -147,6 +147,16 @@ console.log('out');
 
 function customSort(response){
 		
+		var tps = [],
+		    self = {};
+		
+		$('.termPriorityWeight').each(function (i, v) {
+            self = $(this);
+		    tps.push( { term : self.attr('data-term'), value : self.val() } );
+		});
+		
+        console.log("Terms: " + JSON.stringify(tps));
+		
 		origauthorWeight = $( "#authslider" ).slider( "values", 1 ); 
 		
 		authorWeight = 1.1-((origauthorWeight + .1)*.1);
@@ -159,7 +169,7 @@ function customSort(response){
 		pYear1 = $( "#slider-range" ).slider( "values", 0 );
 		pYear2 = $( "#slider-range" ).slider( "values", 1 );
 		
-
+        
 		
 		//Search Term Priority
 		// t0 = $( "#t0slider" ).slider( "values", 1 ); 
@@ -190,7 +200,7 @@ function customSort(response){
 		SearchTerms = $.trim(SearchTerms);
 		SearchTerms = SearchTerms.split(' ');
 		
-		console.log(sortedResponse.documents.pop().title);
+        // console.log(sortedResponse.documents.pop().title);
 		 
 		//Filter Year	- THIS IS REMOVING AN ENTRY BY ACCIDENT!!!
 		if (pYear1 != ""){
@@ -441,7 +451,7 @@ function createSlider(num, q) {
 	$('<p>',{'id':'p'+num+q}).appendTo('#'+q+sliderArray[num]).fadeIn(1000);
 	$('<div>',{'id':tLabel,'class':'tlabel'}).appendTo('#p'+num+q).fadeIn(1000);
 	$('<div>',{'id':'d'+num+q,'style':'float:left'}).appendTo('#p'+num+q).fadeIn(1000);
-	$('<input>',{'id':tPriority,'class':'ui-state-default round-me dynSliderVal'}).appendTo('#d'+num+q).fadeIn(1000);
+	$('<input>',{'id':tPriority, 'data-term' : sliderArray[num], 'class':'ui-state-default round-me dynSliderVal termPriorityWeight'}).appendTo('#d'+num+q).fadeIn(1000);
 	$('<br>').appendTo('#'+q+sliderArray[num]).fadeIn(1000);
 	$('<div>',{'id':tSlider,'class':'dynSlider', 'data-update' : tPriority}).appendTo('#'+q+sliderArray[num]).fadeIn(1000);
 	$('<br>').appendTo('#'+q+sliderArray[num]).fadeIn(1000);
