@@ -429,8 +429,51 @@ function keywordSliders(){
 	sliderArray = [];
 	
 } 
+
+function createSlider(num, q) {
+	tSlider="t"+num+q+"slider";
+	tPriority="t"+num+q+"Priority";
+	tLabel="t"+num+q+"label";
+
+	//console.log("tlabel: "+tLabel);
+
+	$('<div>',{'id':q+sliderArray[num]}).appendTo('#'+q).fadeIn(1000);
+	$('<p>',{'id':'p'+num+q}).appendTo('#'+q+sliderArray[num]).fadeIn(1000);
+	$('<div>',{'id':tLabel,'class':'tlabel'}).appendTo('#p'+num+q).fadeIn(1000);
+	$('<div>',{'id':'d'+num+q,'style':'float:left'}).appendTo('#p'+num+q).fadeIn(1000);
+	$('<input>',{'id':tPriority,'class':'ui-state-default round-me dynSliderVal'}).appendTo('#d'+num+q).fadeIn(1000);
+	$('<br>').appendTo('#'+q+sliderArray[num]).fadeIn(1000);
+	$('<div>',{'id':tSlider,'class':'dynSlider', 'data-update' : tPriority}).appendTo('#'+q+sliderArray[num]).fadeIn(1000);
+	$('<br>').appendTo('#'+q+sliderArray[num]).fadeIn(1000);
+
+
+
+	$( "#" + tSlider).slider({
+		range: "min",
+		min: 0,
+		max: 10,
+		value: 0,
+		slide: function( event, ui ) {
+		    var id = $(this).attr('data-update');
+			$( "#" + id).val( ui.value );
+			console.log("JOSH: " + tPriority);
+		}
+	});
 	
-function superSliders(q){
+	$( "#" + tPriority).val( $("#" + tSlider).slider( "value" ) );
+	$("#" + tLabel).text(sliderArray[num]+"  ");
+
+}
+function superSliders(q) {
+    var i = 0, len = sliderArray.length;
+    numKeyWords = sliderArray.length;
+    
+    for (; i < len; i++) {
+        createSlider(i, q);
+    }
+}
+	
+function superSlidersOld(q){
 	
 	numKeyWords = (sliderArray.length);
 	
